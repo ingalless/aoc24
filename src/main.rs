@@ -22,14 +22,17 @@ fn main() {
 
     for day in days {
         let runner = get_day_runner(day);
-        let (p1, p2) = runner();
+        let input = std::fs::read_to_string(format!("input/day{}.in", day))
+            .expect(format!("could not load input for day {}", day).as_str());
+
+        let (p1, p2) = runner(input);
         println!("\n=== Day {:02} ===", day);
         println!("  · Part 1: {}", p1);
         println!("  · Part 2: {}", p2);
     }
 }
 
-fn get_day_runner(day: u8) -> fn() -> (u32, u32) {
+fn get_day_runner(day: u8) -> fn(String) -> (u32, u32) {
     match day {
         1 => day01::solve,
         2 => day02::solve,
