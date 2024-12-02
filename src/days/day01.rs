@@ -18,6 +18,7 @@ fn p2(lists: &(Vec<u32>, Vec<u32>)) -> u32 {
         .iter()
         .fold(0, |acc, x| acc + (x * map.get(x).unwrap_or(&0)))
 }
+
 pub fn solve(input: String) -> (u32, u32) {
     let mut lists: (Vec<_>, Vec<_>) = input
         .lines()
@@ -29,9 +30,14 @@ pub fn solve(input: String) -> (u32, u32) {
             );
         })
         .unzip();
-    lists.0.sort();
-    lists.1.sort();
-    let lists = lists;
+
+    // The closest thing to "immutable" sorting
+    let lists = {
+        lists.0.sort();
+        lists.1.sort();
+        lists
+    };
+
     let p1 = p1(&lists);
     let p2 = p2(&lists);
 
